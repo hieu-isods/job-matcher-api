@@ -1,10 +1,8 @@
-name: job-matcher-phobert-api
+name: job-matcher-phobert
 services:
 - name: web
   source_dir: /
-  github:
-    repo: dige04/job-matcher-api
-    branch: main
+  build_command: pip install -r requirements.txt
   run_command: uvicorn app:app --host 0.0.0.0 --port $PORT
   environment_slug: python
   instance_count: 1
