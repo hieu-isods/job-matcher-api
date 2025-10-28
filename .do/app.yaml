@@ -1,14 +1,25 @@
-name: job-matcher-phobert-api
+name: job-matcher-api
+region: sgp1
 services:
 - name: web
   source_dir: /
+  dockerfile_path: Dockerfile.do
   github:
-    repo: dige04/job-matcher-api
+    repo: hieu-isods/job-matcher-api
     branch: main
-  run_command: uvicorn app:app --host 0.0.0.0 --port $PORT
-  environment_slug: python
   instance_count: 1
-  instance_size_slug: basic-xs
+  instance_size_slug: professional-xs  # Need professional for model
   http_port: 8080
   routes:
   - path: /
+  envs:
+  - key: PORT
+    value: "8080"
+  - key: MODEL_URL
+    value: "https://storage.googleapis.com/job-matcher-models/phobert_best.pt"
+  - key: TOKENIZER_URL
+    value: "https://storage.googleapis.com/job-matcher-models/tokenizer.zip"
+  - key: ALLOWED_ORIGINS
+    value: "https://app.lovable.dev,https://app.lovable.co,https://*.lovable.dev,https://*.lovable.co"
+  - key: LOG_LEVEL
+    value: "INFO"
